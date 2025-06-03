@@ -37,76 +37,155 @@ Antes de iniciar, instale os seguintes itens:
 
 ---
 
+## 📝 Como Contribuir para o Repositório
+
+Este tutorial descreve o fluxo ideal de trabalho para contribuir com o projeto. Siga as etapas abaixo para garantir que suas alterações sejam integradas ao repositório principal de forma eficiente.
+
 ## ⚙️ Instalação e Setup Local
 
-### 1. Clone o repositório
+### 1. Faça o Fork do Repositório
+Acesse o repositório de desenvolvimento: **[Repositório de desenvolvimento](https://github.com/TransferoNovaIguacu/feedback-company-backend/tree/dev)**
+
+Clique no botão **Fork** no canto superior direito. Isso irá criar uma cópia do repositório na sua conta do GitHub.
+
+### 2. Clone o Repositório Forkado
+Depois de fazer o fork, clone o repositório para o seu computador utilizando o link do seu fork:
 
 ```bash
-git clone --branch dev --single-branch https://github.com/TransferoNovaIguacu/feedback-company-backend.git
-git checkout dev
+git clone https://github.com/SEU-USUARIO/feedback-company-backend.git
 ```
 
-### 2. Crie e ative um ambiente virtual
+### 3. Configure o Ambiente Local
 
-**Com `venv`:**
+Crie e ative um ambiente virtual:
+
+Com `venv`:
 
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-**Ou se quiser usar o `poetry`:**
+Ou se preferir usar o `poetry`:
 
 ```bash
 poetry install
 poetry shell
 ```
 
-### 3. Instale as dependências
+### 4. Instale as Dependências do Projeto
 
 ```bash
 pip install -r requirements-dev.txt
 ```
 
-### 4. Crie o arquivo `.env` na pasta raiz do projeto
+### 5. Crie o Arquivo `.env`
 
-Exemplo de conteúdo do `.env`:
+Na pasta raiz do projeto, crie um arquivo `.env` com as seguintes variáveis de ambiente:
 
 ```env
-SECRET_KEY
-DEBUG
-ALLOWED_HOSTS
+SECRET_KEY=<sua-chave-secreta>
+DEBUG=True
+ALLOWED_HOSTS=localhost
 ```
 
-### 5. Execute as migrações e crie um superusuário
+### 6. Execute as Migrações e Crie um Superusuário
 
 ```bash
+python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
 ```
 
-### 6. Rode o servidor local
+### 7. Rode o Servidor Local
 
 ```bash
 python manage.py runserver
 ```
+
 ---
 
 ## 🧠 Planejamento e Documentação
 
-Consulte a pasta `/docs` para os seguintes materiais:
+Consulte a pasta `/docs` para mais informações, como:
 
-- 📄 Requisitos funcionais e não funcionais  
-- 🧭 Regras de negócio e fluxo do sistema  
-- 📊 Diagrama de classes UML  
-- 🗂️ Backlog 
+- 📄 Requisitos funcionais e não funcionais
+- 🧭 Regras de negócio e fluxos do sistema
+- 📊 Diagramas de classes UML
+- 🗂️ Backlog de Tarefas
+
+---
+
+## 👥 Fluxo de Contribuição
+
+## *Apenas realize as etapas abaixo após realizar o fork, clone, e instalação do projeto.*
+
+### 1. Sincronizando seu Repositório com o Principal
+
+Adicione o repositório principal como `upstream`:
+
+```bash
+git remote add upstream https://github.com/TransferoNovaIguacu/feedback-company-backend.git
+```
+
+Atualize seu repositório local:
+
+```bash
+git fetch upstream
+git checkout dev
+git merge upstream/dev
+```
+
+### 2. Criação de Branch
+
+Crie uma nova branch:
+
+```bash
+git checkout -b <tipo>/descricao-da-tarefa
+```
+
+Exemplo:
+
+```bash
+git checkout -b feature/login-system
+```
+
+> 💡 Visite [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/) para entender o padrão de nomenclatura.
+
+### 3. Fazendo Alterações e Commitando
+
+```bash
+git add .
+git commit -m "feat: add user login system"
+```
+
+### 4. Subindo as Alterações para o Seu Repositório Forkado
+
+```bash
+git push origin <nome-da-branch>
+```
+
+### 5. Criando o Pull Request
+
+- Acesse seu repositório no GitHub
+- Selecione a branch que você acabou de enviar
+- Clique em **Compare & pull request**
+- Descreva as mudanças e clique em **Create pull request**
+
+> ⚠️ Certifique-se de enviar o Pull Request para a branch `dev` do repositório principal.
+
+### 6. Aguardando Revisão
+
+Espere a revisão e aprovação do seu Pull Request. Caso haja feedbacks, faça os ajustes e envie novamente.
 
 ---
 
-## 👥 Contribuindo
+## 🚧 Fluxo Completo de Contribuição
 
-1. Crie uma branch. Ex: `git checkout -b feature/sua-feature`
-2. Faça commits descritivos seguindo a convenção `type: descrição`
-3. Envie seu Pull Request para a branch `dev`
+- Fork e Clone do Repositório Principal
+- Sincronização com o Repositório Principal (`upstream`)
+- Criação de Branch para Tarefa
+- Alterações, Commit e Push
+- Criação do Pull Request
+- Aguardando Revisão e Aprovação
 
----
