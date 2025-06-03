@@ -1,5 +1,5 @@
 ## 📘 Transfero Academy
-# 🌐 Plataforma de Feedbacks com Recompensas em Tokens
+## 🌐 Plataforma de Feedbacks com Recompensas em Tokens
 
 
 > Este repositório contém o código-fonte do backend (Django REST) da plataforma de feedback. A branch `dev` é usada para desenvolvimento contínuo.
