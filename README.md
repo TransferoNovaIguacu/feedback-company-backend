@@ -106,8 +106,43 @@ Consulte a pasta `/docs` para os seguintes materiais:
 
 ## 👥 Contribuindo
 
-1. Crie uma branch. Ex: `git checkout -b feature/sua-feature`
-2. Faça commits descritivos seguindo a convenção `type: descrição`
-3. Envie seu Pull Request para a branch `dev`
+### 1. Crie uma branch para trabalhar com sua vertente do projeto
+
+```bash
+git checkout -b "nome_da_branch" 
+```
+Agora você pode fazer as alterações no projeto
+
+*Confira se a branch foi criada e se você esta dentro dela com o comando:
+
+```bash
+git branch 
+```
+
+### 2.  Adicione os arquivos ao staging do git
+
+```bash
+git add .
+```
+
+### 3.Registre as alterações da branch
+
+```bash
+git commit -m "mudança feita" 
+```
+
+### 4. Envie as alterações para o github
+
+```bash
+git push origin nome_da_branch 
+```
+
+### 5. Faça um pull request no github
+
+- Abra o github, selecione a branch que você enviou para o github
+- Clique na opção Contribute
+- Clique em 'Open pull request' 
+- Se necessário, explque o que foi feito e mande as alterações clicando no botao 'Create pull request'
+- Aguarde a aprovação da solicitação do pull request
 
 ---
