@@ -52,7 +52,7 @@ Clique no botão **Fork** no canto superior direito. Isso irá criar uma cópia 
 Depois de fazer o fork, clone o repositório para o seu computador utilizando o link do seu fork:
 
 ```bash
-git clone https://github.com/SEU-USUARIO/feedback-company-backend.git
+git clone --branch dev --single-branch https://github.com/SEU-USUARIO/feedback-company-backend.git
 ```
 
 ### 3. Configure o Ambiente Local
