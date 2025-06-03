@@ -81,6 +81,7 @@ ALLOWED_HOSTS
 ### 5. Execute as migrações e crie um superusuário
 
 ```bash
+python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
 ```
