@@ -42,7 +42,7 @@ Antes de iniciar, instale os seguintes itens:
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/TransferoNovaIguacu/feedback-company-backend.git
+git clone --branch dev --single-branch https://github.com/TransferoNovaIguacu/feedback-company-backend.git
 git checkout dev
 ```
 
@@ -52,10 +52,10 @@ git checkout dev
 
 ```bash
 python -m venv venv
-.env\Scripts\activate   # Windows
+venv\Scripts\activate
 ```
 
-**Ou com `poetry`:**
+**Ou se quiser usar o `poetry`:**
 
 ```bash
 poetry install
