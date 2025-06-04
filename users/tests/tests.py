@@ -67,7 +67,7 @@ class TestAuthAPI:
         assert response.status_code == 200
         assert response.data['email'] == self.user_data['email']
 
-    #Resulta em um erro por não aceitar um acdess token, e sim um refresh token
+    # Resulta em um erro por não aceitar um acdess token, e sim um refresh token
     # def test_user_logout(self):
     #     # Cria usuário
     #     User.objects.create_user(

@@ -59,7 +59,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -172,4 +172,4 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-PASSWORD_RESET_CONFIRM_URL = 'accounts/password_reset_confirm/{uidb64}/{token}/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

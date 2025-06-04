@@ -39,3 +39,4 @@ class CustomRegisterSerializer(serializers.Serializer):
             password=self.validated_data['password1']
         )
         return user
+    
