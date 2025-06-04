@@ -52,7 +52,7 @@ Clique no botão **Fork** no canto superior direito. Isso irá criar uma cópia 
 Depois de fazer o fork, clone o repositório para o seu computador utilizando o link do seu fork:
 
 ```bash
-git clone https://github.com/SEU-USUARIO/feedback-company-backend.git
+git clone --branch dev --single-branch https://github.com/SEU-USUARIO/feedback-company-backend.git
 ```
 
 ### 3. Configure o Ambiente Local
@@ -84,9 +84,9 @@ pip install -r requirements-dev.txt
 Na pasta raiz do projeto, crie um arquivo `.env` com as seguintes variáveis de ambiente:
 
 ```env
-SECRET_KEY=<sua-chave-secreta>
+SECRET_KEY=teste123
 DEBUG=True
-ALLOWED_HOSTS=localhost
+ALLOWED_HOSTS= 127.0.0.1
 ```
 
 ### 6. Execute as Migrações e Crie um Superusuário
