@@ -1,6 +1,39 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.utils.translation import gettext_lazy as _
 
+class UserManager(BaseUserManager):
+    """Define a model manager for User model with no username field."""
+
+    use_in_migrations = True
+
+    def _create_user(self, email, password, **extra_fields):
+        """Create and save a User with the given email and password."""
+        if not email:
+            raise ValueError('The given email must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, email, password=None, **extra_fields):
+        """Create and save a regular User with the given email and password."""
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        """Create and save a SuperUser with the given email and password."""
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self._create_user(email, password, **extra_fields)
 
 class UserType(models.TextChoices):
     COMMON = "COMMON", "Common User"
@@ -9,9 +42,9 @@ class UserType(models.TextChoices):
     ANALYST = "ANALYST", "Analyst"
     ADMIN = "ADMIN", "Admin"
 
-
 class User(AbstractUser):
-    email = models.EmailField(unique=True)
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
     
     user_type = models.CharField(
         max_length=20,
@@ -35,94 +68,10 @@ class User(AbstractUser):
         help_text="Tokens bloqueados temporariamente (ex: em análise de saque)."
     )
 
-    date_joined = models.DateTimeField(auto_now_add=True)
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     def __str__(self):
-        return f"{self.username} ({self.get_user_type_display()})"
-
-
-class CommonUser(User):
-    full_name = models.CharField(
-        max_length=255,
-        help_text="Nome completo do usuário."
-    )
-
-    cpf = models.CharField(
-        max_length=11,
-        unique=True,
-        help_text="CPF do usuário (apenas números)."
-    )
-
-    total_tokens_earned = models.DecimalField(
-        max_digits=20,
-        decimal_places=2,
-        default=0,
-        help_text="Total de tokens ganhos pelo usuário desde o cadastro."
-    )
-
-    tokens_balance = models.DecimalField(
-        max_digits=20,
-        decimal_places=2,
-        default=0,
-        help_text="Saldo de tokens disponíveis para saque (simulado off-chain)."
-    )
-
-    completed_missions = models.PositiveIntegerField(
-        default=0,
-        help_text="Quantidade de missões concluídas pelo usuário."
-    )
-
-    withdrawal_minimum = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        default=10.00,
-        help_text="Valor mínimo para saque."
-    )
-
-    def __str__(self):
-        return f"{self.full_name} (CommonUser)"
-
-
-class Company(User):
-    commercial_name = models.CharField(
-        max_length=255,
-        help_text="Nome fantasia da empresa."
-    )
-
-    cnpj = models.CharField(
-        max_length=14,
-        unique=True,
-        help_text="CNPJ da empresa (apenas números)."
-    )
-
-    website = models.URLField(
-        max_length=200,
-        blank=True,
-        help_text="URL do site oficial da empresa."
-    )
-
-    logo_url = models.URLField(
-        blank=True,
-        help_text="URL da logo da empresa."
-    )
-
-    verified = models.BooleanField(
-        default=False,
-        help_text="Indica se a empresa foi verificada pela plataforma."
-    )
-
-    tokens_balance = models.DecimalField(
-        max_digits=20,
-        decimal_places=2,
-        default=0,
-        help_text="Saldo de tokens disponível para ações internas da empresa (off-chain)."
-    )
-
-    corporate_tax_id = models.CharField(
-        max_length=20,
-        blank=True,
-        help_text="Inscrição estadual, municipal ou outro identificador fiscal."
-    )
-
-    def __str__(self):
-        return f"{self.commercial_name} (Company)"
+        return self.email
