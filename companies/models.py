@@ -1,14 +1,9 @@
 from django.db import models
-from users.models import User
+from users.models import User, UserType
 from companies.validators import validate_cnpj
 from django.utils import timezone
 
-class Company(models.Model):
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        related_name='company'
-    )
+class Company(User):
 
     commercial_name = models.CharField(
         max_length=255,
@@ -72,6 +67,14 @@ class Company(models.Model):
     class Meta:
         verbose_name_plural = "Companies"
         ordering = ['-created_at']
+        
+    def save(self, *args, **kwargs):
+        self.user_type = UserType.COMPANY
+    
+        if self.cnpj:
+            self.cnpj = ''.join(filter(str.isdigit, self.cnpj))
+        
+        super().save(*args, **kwargs)
 
     @property
     def active_plan(self):
