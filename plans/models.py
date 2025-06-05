@@ -24,7 +24,7 @@ class Plan(models.Model):
 
 
 class ContractedPlan(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='contracted_plans')
     plan = models.ForeignKey(Plan, on_delete=models.PROTECT)
     purchase_date = models.DateTimeField(auto_now_add=True)
     remaining_feedbacks = models.PositiveIntegerField()
@@ -40,7 +40,7 @@ class ContractedPlan(models.Model):
             self.remaining_feedbacks = self.plan.feedbacks_available
             self.remaining_quests = self.plan.quests_available
             if not self.expiration_date:
-                self.expiration_date = timezone.now() + timedelta(days=30)  # exemplo: plano válido por 30 dias
+                self.expiration_date = timezone.now() + timedelta(days=30)  
         super().save(*args, **kwargs)
 
     def is_expired(self):
