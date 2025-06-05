@@ -1,7 +1,10 @@
 import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
-from users.models import User
+from users.models import User, CommonUser, UserType
+from django.core.exceptions import ValidationError
+from django.db import transaction
+from validate_docbr import CPF
 
 @pytest.mark.django_db
 class TestAuthAPI:
@@ -94,10 +97,7 @@ class TestAuthAPI:
     #     assert logout_response.status_code in [200, 204]
     #     assert 'detail' in logout_response.data
 
-    #     # Tenta acessar uma rota protegida após logout (dependendo da configuração do backend)
     #     protected_response = self.client.get(self.user_detail_url)
-
-    #     # Verifica se o token não funciona mais (se for blacklist, depende de configuração)
     #     assert protected_response.status_code in [401, 403]
 
     def test_user_logout(self):
@@ -124,7 +124,7 @@ class TestAuthAPI:
         logout_url = reverse('rest_logout')
         logout_response = self.client.post(logout_url, {'refresh': refresh_token}, format='json')
 
-        assert logout_response.status_code in [200, 204]  # Dependendo da configuração
+        assert logout_response.status_code in [200, 204]
 
     def test_registration_with_weak_password(self):
         weak_password_data = {
@@ -197,3 +197,99 @@ class TestAuthAPI:
         response = self.client.post(logout_url, {"refresh": refresh_token}, format='json')
 
         assert response.status_code in [200, 204]
+        
+# Teste de Common User
+@pytest.mark.django_db
+class TestCommonUser:
+    def test_create_common_user(self):
+        
+        user_data = {
+            "email": "commonuser@example.com",
+            "password": "strongpassword123",
+            "user_type": UserType.COMMON,
+        }
+        
+        common_user_data = {
+            "full_name": "Fulano de Tal",
+            "cpf": "52998224725",
+            "total_tokens_earned": 100.50,
+            "completed_missions": 5,
+        }
+        
+        common_user = CommonUser(
+        email="commonuser@example.com",
+        password="strongpassword123",
+        user_type=UserType.COMMON,
+        full_name="Fulano de Tal",
+        cpf="52998224725",
+        total_tokens_earned=100.50,
+        completed_missions=5,
+        )
+        common_user.save()
+        
+        assert User.objects.count() == 1
+        assert CommonUser.objects.count() == 1
+        
+        db_user = User.objects.get(email=user_data['email'])
+        assert db_user.email == user_data['email']
+        assert db_user.user_type == UserType.COMMON
+        assert db_user.is_active is True
+        assert db_user.is_staff is False
+        
+        db_common_user = CommonUser.objects.get(cpf=common_user_data['cpf'])
+        assert db_common_user.full_name == common_user_data['full_name']
+        assert db_common_user.cpf == common_user_data['cpf']
+        assert float(db_common_user.total_tokens_earned) == float(common_user_data['total_tokens_earned'])
+        assert db_common_user.completed_missions == common_user_data['completed_missions']
+        
+        assert db_common_user.user_ptr_id == db_user.id
+        assert db_common_user.email == db_user.email
+
+    def test_cpf_validation(self):
+        invalid_cpf = "12345678901" 
+        
+        common_user = CommonUser(
+            email="invalidcpf@example.com",
+            password="testpass123",
+            full_name="Invalid CPF",
+            cpf=invalid_cpf,
+            total_tokens_earned=0,
+            completed_missions=0
+        )
+        
+        with pytest.raises(ValidationError) as excinfo:
+            common_user.full_clean()
+        
+        assert 'cpf' in str(excinfo.value)
+
+    def test_cpf_formatting(self):
+        
+        formatted_cpf = "529.982.247-25"
+        expected_cpf = "52998224725"
+        
+        common_user = CommonUser(
+            email="formattedcpf@example.com",
+            password="testpass123",
+            full_name="Formatted CPF",
+            cpf=formatted_cpf,
+            total_tokens_earned=0,
+            completed_missions=0
+        )
+        
+        common_user.save()
+        
+        db_common_user = CommonUser.objects.get(email="formattedcpf@example.com")
+        assert db_common_user.cpf == expected_cpf
+
+    def test_common_user_str_representation(self):
+        common_user = CommonUser(
+            email="strtest@example.com",
+            password="testpass123",
+            full_name="Test User",
+            cpf="52998224725",
+            total_tokens_earned=0,
+            completed_missions=0
+        )
+        common_user.save()
+        
+        assert str(common_user) == "Test User (52998224725)"

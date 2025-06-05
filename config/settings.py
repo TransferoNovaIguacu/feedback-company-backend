@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'users',
     'plans',
     'companies',
+    'missions',
+    'reports',
+    'tokens',
+    'web3integration',
 ]
 
 MIDDLEWARE = [
