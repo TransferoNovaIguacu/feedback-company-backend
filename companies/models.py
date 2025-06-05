@@ -7,7 +7,7 @@ class Company(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        related_name='companies'
+        related_name='company'
     )
 
     commercial_name = models.CharField(
