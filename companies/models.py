@@ -73,7 +73,8 @@ class Company(User):
     
         if self.cnpj:
             self.cnpj = ''.join(filter(str.isdigit, self.cnpj))
-        
+
+        self.full_clean()
         super().save(*args, **kwargs)
 
     @property
