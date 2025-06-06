@@ -24,7 +24,7 @@ class Plan(models.Model):
 
 
 class ContractedPlan(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='contracted_plans')
+    company = models.ForeignKey(Company, related_name='contracted_plans', on_delete=models.CASCADE)
     plan = models.ForeignKey(Plan, on_delete=models.PROTECT)
     purchase_date = models.DateTimeField(auto_now_add=True)
     remaining_feedbacks = models.PositiveIntegerField()

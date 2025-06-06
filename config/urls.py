@@ -9,4 +9,5 @@ urlpatterns = [
     path('api/auth/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('api/plans/', include('plans.urls')),
+    path('api/missions/', include('missions.urls')),
 ]
