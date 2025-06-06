@@ -11,4 +11,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('api/plans/', include('plans.urls')),
     path('api/balance/', token_balance, name='token-balance'),
+    path('api/missions/', include('missions.urls')),
 ]

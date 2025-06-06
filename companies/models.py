@@ -78,9 +78,12 @@ class Company(User):
 
     @property
     def active_plan(self):
-        return self.contracted_plans.filter(
-            is_active=True,
-            expiration_date__gte=timezone.now()
+        # Retorna o plano ativo cujo intervalo de datas inclui hoje
+        today = timezone.now().date()
+        return self.plans.filter(
+            start_date__lte=today,
+            end_date__gte=today,
+            is_active=True
         ).first()
 
     @property

@@ -1,6 +1,12 @@
-from django.urls import path
-from .views import InitialView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import MissionViewSet, FeedbackViewSet, QuizAnswerViewSet
+
+router = DefaultRouter()
+router.register(r'missions', MissionViewSet)
+router.register(r'feedbacks', FeedbackViewSet)
+router.register(r'quiz-answers', QuizAnswerViewSet)
 
 urlpatterns = [
-    path("", InitialView.as_view()),
+    path('', include(router.urls)),
 ]
