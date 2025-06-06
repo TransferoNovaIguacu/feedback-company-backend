@@ -1,6 +1,6 @@
 from django.shortcuts import render
-
-from rest_framework import viewsets, permissions, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets, permissions, status, generics
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import Plan, ContractedPlan
@@ -46,3 +46,27 @@ class ContractedPlanViewSet(viewsets.ModelViewSet):
         
         serializer = self.get_serializer(contracted_plan)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+
+class PlanListView(generics.ListAPIView):
+    queryset = Plan.objects.filter(is_active=True)
+    serializer_class = PlanSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        
+        # Formatação corrigida
+        formatted_data = []
+        for plan in serializer.data:
+            formatted_data.append({
+                "plano": plan["name"],
+                "preco_do_plano": str(plan["token_value"]),
+                "descricao": plan["description"],
+                "feedbacks_disponiveis": plan["feedbacks_available"],
+                "missoes_disponiveis": plan["quests_available"],
+                "porcentagem_recompensa": str(plan["reward_percentage"]),
+            })
+        
+        return Response(formatted_data)
