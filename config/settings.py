@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'companies',
     'missions',
     'reports',
-    'tokens',
+    'tokens.apps.TokensConfig',
     'web3integration',
 ]
 
