@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'django_filters',
+    'drf_spectacular',
 
     # django-allauth
     'allauth',
@@ -119,9 +120,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Django REST Framework
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.SessionAuthentication',  # Para admin
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -130,7 +131,7 @@ REST_FRAMEWORK = {
 
 # Simple JWT
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -163,6 +164,7 @@ REST_AUTH = {
     'JWT_AUTH_REFRESH_COOKIE': 'jwt-refresh',
     'USER_DETAILS_SERIALIZER': 'users.serializers.CustomUserDetailsSerializer',
     'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
+    'LOGIN_SERIALIZER': 'users.serializers.CustomLoginSerializer',
 }
 
 AUTH_PASSWORD_VALIDATORS = [

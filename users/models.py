@@ -44,6 +44,8 @@ class UserType(models.TextChoices):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    
+    username = None
     email = models.EmailField(_('email address'), unique=True)
     user_type = models.CharField(
         max_length=20,
