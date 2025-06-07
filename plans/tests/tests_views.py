@@ -4,6 +4,7 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from plans.models import Plan
 from users.models import User, CommonUser
+from companies.models import Company
 
 @pytest.fixture
 def client():
@@ -22,11 +23,19 @@ def admin_user():
 @pytest.fixture
 def company_user():
     
-    return User.objects.create_user(
-        email='company@test.com',
-        password='companypass123',
-        user_type='COMPANY'
+    company = Company.objects.create(
+        email="teste@teste.com",
+        password="testesenha@123",
+        commercial_name="Minha Empresa Ltda",
+        legal_name="Minha Empresa Ltda",
+        cnpj="99770423000158",
+        website="https://www.minhaempresa.com.br",
+        logo_url="https://www.minhaempresa.com.br/logo.png",
+        verified=True,
+        tokens_balance=100.0,
+        corporate_tax_id="123456789012",
     )
+    return company
 
 @pytest.fixture
 def common_user():
@@ -107,3 +116,22 @@ def test_plan_list_common_user(client, common_user, create_plans):
     
     assert response.status_code == 200
     assert len(response.data) == 2
+    
+@pytest.mark.django_db
+def test_plan_list_company_user(client, company_user, create_plans):
+    
+    client.force_authenticate(user=company_user)
+    url = reverse('plan-list')
+    response = client.get(url)
+
+    assert response.status_code == 200
+    assert len(response.data) == 2
+    assert any(plan['name'] == "Plano Básico" for plan in response.data)
+
+@pytest.mark.django_db
+def test_plan_list_anonymous_user(client, create_plans):
+    
+    url = reverse('plan-list')
+    response = client.get(url)
+
+    assert response.status_code == 401
