@@ -29,3 +29,4 @@ dj-rest-auth>=7.0.1
 
 # Docs swagger & redoc
 drf-spectacular
+
