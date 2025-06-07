@@ -10,6 +10,11 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://feedback-company-front-n57b.vercel.app",
+]
+
 SITE_ID = 1
 
 INSTALLED_APPS = [
