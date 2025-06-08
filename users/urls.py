@@ -3,8 +3,9 @@ from .views import (
     CustomLoginView,
     CommonUserRegisterView,
     UserProfileView,
+    LogoutView
 )
-from dj_rest_auth.views import PasswordResetView, LogoutView, PasswordResetConfirmView
+from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 
 
 urlpatterns = [
