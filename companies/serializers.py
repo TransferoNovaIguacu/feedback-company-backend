@@ -58,21 +58,6 @@ class CompanyRegisterSerializer(RegisterSerializer):
         return cnpj
 
     def save(self, request):
-        company = Company.objects.create_user(
-            email=self.validated_data['email'],
-            password=self.validated_data['password1'],
-            commercial_name=self.validated_data['commercial_name'],
-            legal_name=self.validated_data['legal_name'],
-            business_area=self.validated_data.get('business_area', ''),
-            cnpj=self.validated_data['cnpj'],
-            website=self.validated_data.get('website', ''),
-            logo_url=self.validated_data.get('logo_url', ''),
-            corporate_tax_id=self.validated_data.get('corporate_tax_id', ''),
-            user_type="COMPANY"
-        )
-        return company
-
-    def save(self, request):
         try:
             company = Company.objects.create_user(
                 email=self.validated_data['email'],
