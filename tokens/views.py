@@ -106,8 +106,14 @@ def remove_tokens(request):
 
     return Response({'error': 'Saldo insuficiente para remover tokens.'}, status=status.HTTP_400_BAD_REQUEST)
 
+@extend_schema(
+    request=AmountSerializer,
+    responses={200: AmountSerializer},
+    description="Saca o valor para a carteira externa"
+)
 class WithdrawTokensView(APIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = AmountSerializer
     
     def post(self, request):
         # Validação dos dados de entrada
@@ -158,6 +164,7 @@ class WithdrawTokensView(APIView):
                 )
                 
                 return Response({
+                    "withdrawal":f"Valor retirado: {amount}FBTK",
                     "success": True,
                     "tx_hash": tx_hash,
                     "new_balance": str(wallet.balance),

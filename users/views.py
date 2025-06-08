@@ -193,7 +193,7 @@ class WalletAddressView(APIView):
             return Response({
                 "success": True,
                 "message": f"Carteira {action} com sucesso",
-                "wallet_address": user.wallet_address
+                "wallet_address": user.wallet_address,
             }, status=status.HTTP_200_OK)
         
         return Response({
