@@ -21,6 +21,7 @@ validate-docbr>=1.10.0
 pytest>=8.1.1
 pytest-django>=4.8.0
 coverage>=7.4.4
+pytest-logger
 
 # Django rest auth e django allauth
 pytest>=8.1.1
@@ -29,6 +30,4 @@ dj-rest-auth>=7.0.1
 
 # Docs swagger & redoc
 drf-spectacular
-
-
 
