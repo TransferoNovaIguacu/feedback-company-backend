@@ -8,6 +8,8 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db.utils import DataError
 from validate_docbr import CNPJ
 import logging
+from django.utils.text import slugify
+from django.db import models
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +59,8 @@ class CompanyRegisterSerializer(RegisterSerializer):
             raise serializers.ValidationError("CNPJ inválido.")
         return cnpj
 
+    
+    
     def save(self, request):
         try:
             company = Company.objects.create_user(
@@ -90,10 +94,6 @@ class CompanyRegisterSerializer(RegisterSerializer):
         except Exception as e:
                 logger.error(f"Erro inesperado no registro da empresa: {e}", exc_info=True)
                 raise serializers.ValidationError({"detail": "Erro interno do servidor."})
-    
-class CompanyRegisterView(RegisterView):
-    
-    serializer_class = CompanyRegisterSerializer
     
 class CompanyProfileSerializer(serializers.ModelSerializer):
     class Meta:

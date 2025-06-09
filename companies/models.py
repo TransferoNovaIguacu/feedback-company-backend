@@ -4,7 +4,8 @@ from companies.validators import validate_cnpj
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from validate_docbr import CNPJ
-
+from django.utils.text import slugify
+from django.db import models
 class Company(User):
 
     commercial_name = models.CharField(
@@ -58,6 +59,8 @@ class Company(User):
         blank=True,
         help_text="Inscrição estadual, municipal ou outro identificador fiscal.",
     )
+    
+    slug = models.SlugField(unique=True, blank=True)
 
     def __str__(self):
         return f"{self.commercial_name} (Company)"
@@ -78,6 +81,8 @@ class Company(User):
                 raise ValidationError({'cnpj': 'CNPJ inválido'})
         
     def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.commercial_name)
         self.user_type = UserType.COMPANY
         self.full_clean()
         super().save(*args, **kwargs)

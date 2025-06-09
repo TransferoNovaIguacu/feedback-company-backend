@@ -105,6 +105,15 @@ class CommonUser(User):
             self.cpf = ''.join(filter(str.isdigit, self.cpf))
             if not CPF().validate(self.cpf):
                 raise ValidationError({'cpf': 'CPF inválido'})
+            
+    
+    def has_missions_active(self):
+        from missions.models import Mission
+        missions = Mission.objects.filter(assigned_to=self.user.id)
+        if missions.exists():
+            return list(missions)
+        return []
+            
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
