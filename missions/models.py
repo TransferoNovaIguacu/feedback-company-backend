@@ -24,6 +24,7 @@ class Mission(models.Model):
         ('EXPIRED', 'Expired'),
     )
     
+    company = models.ForeignKey('companies.Company', on_delete=models.CASCADE, related_name='missions')
     contracted_plan = models.ForeignKey(ContractedPlan, on_delete=models.CASCADE, related_name='missions')
     mission_type = models.CharField(max_length=10, choices=MISSION_TYPES)
     title = models.CharField(max_length=255)

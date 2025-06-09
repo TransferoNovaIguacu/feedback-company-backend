@@ -13,9 +13,33 @@ class MissionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Mission.objects.all()
     
+    def create(self, request, *args, **kwargs):
+        if not hasattr(request.user, 'company'):
+            return Response({'error': 'Apenas empresas podem criar missões.'}, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(company=request.user.company)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
     def get_queryset(self):
-        user = self.request.user
         return Mission.objects.filter(status="PENDING")
+    
+    @extend_schema(
+        responses={200: MissionSerializer(many=True)}
+    )
+    @action(detail=False, methods=['get'], url_path='company-missions')
+    def company_missions(self, request):
+        if not hasattr(request.user, 'company'):
+            return Response({'error': 'Apenas empresas podem acessar essa rota.'}, status=status.HTTP_403_FORBIDDEN)
+        
+        status_param = request.query_params.get('status')
+        queryset = Mission.objects.filter(company=request.user.company)
+        if status_param:
+            queryset = queryset.filter(status=status_param.upper())
+            
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     @extend_schema(
         parameters=[
