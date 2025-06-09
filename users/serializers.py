@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError as DRFValidationError
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from users.models import CommonUser
+from django.core.validators import MinLengthValidator
 
 User = get_user_model()
 
@@ -91,3 +92,30 @@ class CustomLoginSerializer(LoginSerializer):
 class LogoutSerializer(serializers.Serializer):
     
     refresh = serializers.CharField()
+    
+    
+class WalletAddressSerializer(serializers.ModelSerializer):
+    wallet_address = serializers.CharField(
+        max_length=42,
+        required=True,
+        validators=[MinLengthValidator(42)],
+        help_text="Endereço da carteira blockchain (42 caracteres)"
+    )
+
+    class Meta:
+        model = User
+        fields = ['wallet_address']
+        extra_kwargs = {
+            'wallet_address': {
+                'error_messages': {
+                    'min_length': 'O endereço da carteira deve ter exatamente 42 caracteres',
+                    'blank': 'O endereço da carteira é obrigatório'
+                }
+            }
+        }
+
+    def validate_wallet_address(self, value):
+        value = value.strip()
+        if not value.startswith('0x'):
+            raise serializers.ValidationError("O endereço deve começar com '0x'")
+        return value

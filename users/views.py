@@ -1,4 +1,4 @@
-from .serializers import CommonUserRegisterSerializer, CommonUserProfileSerializer, LogoutSerializer
+from .serializers import CommonUserRegisterSerializer, CommonUserProfileSerializer, LogoutSerializer, WalletAddressSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from companies.serializers import CompanyProfileSerializer
 from django.db import DatabaseError
@@ -166,5 +166,39 @@ class LogoutView(APIView):
             return Response({"detail": f"Erro ao processar logout: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response({"detail": "Logout realizado com sucesso."}, status=status.HTTP_200_OK)
+    
+class WalletAddressView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    @extend_schema(
+        request=WalletAddressSerializer,
+        responses={200: WalletAddressSerializer},
+        description="Adiciona/atualiza o endereço da carteira blockchain do usuário"
+    )
+    def put(self, request):
+        user = request.user
+        serializer = WalletAddressSerializer(user, data=request.data)
+        
+        if serializer.is_valid():
+            had_previous_address = bool(user.wallet_address)
+            
+            serializer.save()
+            
+            action = "atualizada" if had_previous_address else "cadastrada"
+            logger.info(
+                f"Wallet address {action} | User: {user.id} | "
+                f"New address: {user.wallet_address}"
+            )
+            
+            return Response({
+                "success": True,
+                "message": f"Carteira {action} com sucesso",
+                "wallet_address": user.wallet_address
+            }, status=status.HTTP_200_OK)
+        
+        return Response({
+            "success": False,
+            "errors": serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
 
     

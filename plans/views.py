@@ -28,7 +28,7 @@ class ContractedPlanViewSet(viewsets.ModelViewSet):
         return ContractedPlan.objects.filter(company__user=self.request.user)
 
     @action(detail=True, methods=['post'])
-    def purchase(self, request, pk=None):
+    def purcharse(self, request, pk=None):
 
         plan = Plan.objects.get(pk=pk)
         company = Company.objects.get(user=request.user)

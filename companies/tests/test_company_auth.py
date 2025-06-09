@@ -3,7 +3,9 @@ from unittest.mock import patch
 import pytest
 from rest_framework.test import APIClient
 from django.urls import reverse
+from rest_framework import serializers
 from companies.models import Company
+from companies.serializers import CompanyRegisterSerializer
 
 @pytest.mark.django_db
 class TestCompanyRegistration:
@@ -40,7 +42,9 @@ class TestCompanyRegistration:
         response = self.client.post(self.url, data=json.dumps(data), content_type="application/json")
         print("\n🚫 CNPJ inválido:", response.status_code, response.json())
         assert response.status_code == 400
-        assert "cnpj" in response.json()
+        response_data = response.json()
+        assert "cnpj" in response_data
+        assert "CNPJ inválido" in str(response_data["cnpj"])
 
     def test_register_company_duplicate_email(self):
         Company.objects.create_user(
@@ -116,7 +120,7 @@ class TestCompanyRegistration:
         assert "non_field_errors" in response.json()
 
     def test_register_company_internal_server_error(self):
-        with patch('companies.serializers.Company.objects.create_user', side_effect=Exception("Erro interno")):
+        with patch.object(CompanyRegisterSerializer, 'save', side_effect=Exception("Erro interno")):
             data = {
                 "email": "empresa8@teste.com",
                 "password1": "SenhaForte123",
@@ -127,5 +131,5 @@ class TestCompanyRegistration:
             }
             response = self.client.post(self.url, data=json.dumps(data), content_type="application/json")
             print("\n🔥 Erro interno forçado:", response.status_code, response.json())
-            assert response.status_code in [400, 500]
+            assert response.status_code == 500 
             assert "detail" in response.json()

@@ -2,9 +2,15 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+from pathlib import Path
+from dotenv import load_dotenv
 
 def main():
+    
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    dotenv_path = BASE_DIR / 'web3integration' / '.env'
+    load_dotenv(dotenv_path)
+
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
     try:

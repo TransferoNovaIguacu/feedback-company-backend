@@ -1,10 +1,38 @@
+from decimal import Decimal
 import os
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
 from corsheaders.defaults import default_headers
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv_path = BASE_DIR / 'web3integration' / '.env'
+load_dotenv(dotenv_path)
+
+# Configurações Blockchain
+WEB3_HTTP_PROVIDER_URL = os.getenv('WEB3_PROVIDER_URL')
+WEB3_WS_PROVIDER_URL = os.getenv('WEB3_WS_PROVIDER_URL')
+CHAIN_ID = int(os.getenv('CHAIN_ID', 11155111))
+CONTRACT_ADDRESS = os.getenv('CONTRACT_ADDRESS')
+PRIVATE_KEY = os.getenv('PRIVATE_KEY')
+ADMIN_ADDRESS = os.getenv('ADMIN_ADDRESS')
+REWARD_PER_FEEDBACK = Decimal(os.getenv('REWARD_PER_FEEDBACK', '0.5'))
+MIN_WITHDRAWAL = Decimal(os.getenv('MIN_WITHDRAWAL', '50'))
+
+# Configuração do Logger
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config("DEBUG") == "true"
@@ -47,6 +75,7 @@ INSTALLED_APPS = [
     'reports',
     'tokens.apps.TokensConfig',
     'web3integration',
+    'blockchain.apps.BlockchainConfig',
 ]
 
 MIDDLEWARE = [
@@ -169,21 +198,5 @@ REST_AUTH = {
     'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
     'LOGIN_SERIALIZER': 'users.serializers.CustomLoginSerializer',
 }
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {'min_length': 8}  
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
