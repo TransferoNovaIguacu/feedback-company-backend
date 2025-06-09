@@ -8,5 +8,4 @@ __pycache__
 *.env
 *.DS_Store
 venv/
-**/migrations/*_initial.py
 **/node_modules/
