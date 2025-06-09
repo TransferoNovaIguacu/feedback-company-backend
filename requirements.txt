@@ -68,8 +68,7 @@ jsonschema-specifications
 kombu
 packaging
 python-dateutil
-pyunormalize
-pywin32
+pyunormalize    
 PyYAML
 referencing
 regex
