@@ -83,4 +83,4 @@ uritemplate
 urllib3
 vine
 wcwidth
-MySQLdb
+mysqlclient
