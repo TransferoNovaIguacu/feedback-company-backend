@@ -11,7 +11,7 @@ from datetime import timedelta
 
 class PlanViewSet(viewsets.ModelViewSet):
     serializer_class = PlanSerializer
-    permission_classes = [permissions.IsAuthenticated]  # Ou AllowAny para teste
+    permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
         # Exemplo: filtrar apenas planos ativos
@@ -22,18 +22,17 @@ class ContractedPlanViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        # Empresas veem apenas seus próprios planos contratados
+
         if self.request.user.is_staff:
             return ContractedPlan.objects.all()
         return ContractedPlan.objects.filter(company__user=self.request.user)
 
     @action(detail=True, methods=['post'])
     def purchase(self, request, pk=None):
-        # Lógica para contratar um plano
+
         plan = Plan.objects.get(pk=pk)
         company = Company.objects.get(user=request.user)
         
-        # Define a data de expiração (ex: 30 dias a partir de agora)
         expiration_date = timezone.now() + timedelta(days=30)
         
         contracted_plan = ContractedPlan.objects.create(
@@ -57,7 +56,6 @@ class PlanListView(generics.ListAPIView):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         
-        # Formatação corrigida
         formatted_data = []
         for plan in serializer.data:
             formatted_data.append({
