@@ -1,3 +1,5 @@
+from missions.models import Mission
+from missions.serializers import MissionSerializer
 from .serializers import CommonUserRegisterSerializer, CommonUserProfileSerializer, LogoutSerializer, WalletAddressSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from companies.serializers import CompanyProfileSerializer
@@ -9,7 +11,7 @@ from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import ValidationError, AuthenticationFailed
+from rest_framework.exceptions import ValidationError, AuthenticationFailed, NotFound
 from django.contrib.auth import get_user_model
 from rest_framework.exceptions import ValidationError as DRFValidationError
 from drf_spectacular.utils import extend_schema
@@ -95,12 +97,13 @@ class UserProfileView(APIView):
     
     permission_classes = [IsAuthenticated]
 
-    def get_serializer_class(self, user):
+    def get_serializer_class(self):
+        user = self.request.user
         if hasattr(user, 'commonuser'):
             return CommonUserProfileSerializer
         elif hasattr(user, 'company'):
             return CompanyProfileSerializer
-        return None
+        raise NotFound("Perfil de usuário não encontrado.")
 
     def get(self, request):
         user = request.user
@@ -201,4 +204,16 @@ class WalletAddressView(APIView):
             "errors": serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
 
-    
+
+class UserActiveMissionsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        missions = Mission.objects.filter(assigned_to=user)
+        
+        if missions.exists():
+            serializer = MissionSerializer(missions, many=True)
+            return Response({"missions": serializer.data}, status=200)
+        
+        return Response({"missions": []}, status=200)

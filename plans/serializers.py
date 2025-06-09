@@ -1,5 +1,7 @@
+from django.utils import timezone
 from rest_framework import serializers
 from .models import Plan, ContractedPlan
+from drf_spectacular.utils import extend_schema_field
 
 class PlanSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,5 +17,6 @@ class ContractedPlanSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('purchase_date', 'remaining_feedbacks', 'remaining_quests')
 
-    def get_is_expired(self, obj):
-        return obj.is_expired()
+    @extend_schema_field(bool)
+    def get_is_expired(self, obj) -> bool:
+        return obj.expiration_date < timezone.now()

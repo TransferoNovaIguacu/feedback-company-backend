@@ -33,7 +33,7 @@ class ContractedPlan(models.Model):
     expiration_date = models.DateTimeField()
 
     def __str__(self):
-        return f"{self.company.name} - {self.plan.name}"
+        return f"{self.company.commercial_name} - {self.plan.name}"
 
     def save(self, *args, **kwargs):
         if not self.pk:
