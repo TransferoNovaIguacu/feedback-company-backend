@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 def main():
     
     BASE_DIR = Path(__file__).resolve().parent.parent
-    dotenv_path = BASE_DIR / 'web3integration' / '.env'
+    dotenv_path = BASE_DIR / '.env'
     load_dotenv(dotenv_path)
 
     """Run administrative tasks."""
