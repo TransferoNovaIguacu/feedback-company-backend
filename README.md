@@ -25,11 +25,11 @@ Plataforma para **coleta de feedbacks e respostas de questionários**, com **rec
 
 | Nome | Função |
 |-------|-------|
-|📂 [@roberto-lourenco](https://github.com/roberto-lourenco)| Líder de equipe & Engenheiro de software |
-|📂 [@Marcusantana](https://github.com/Marcusantana)| Desenvolvedor Full Stack |
-|📂 [@BoratCRF](https://github.com/BoratCRF)| Desenvolvedor Full Stack |
-|📂 [@Caua-Israel](https://github.com/Caua-Israel)| Desenvolvedor Full Stack |
-|📂 [@france-m52](https://github.com/france-m52)| Desenvolvedor Full Stack & Economista  |
+|📂 [Roberto Lourenço](https://github.com/roberto-lourenco)| Líder de equipe & Engenheiro de software |
+|📂 [Marcus Vinicius](https://github.com/Marcusantana)| Desenvolvedor Full Stack |
+|📂 [Vinicius Lino](https://github.com/BoratCRF)| Desenvolvedor Full Stack |
+|📂 [Cauã Israel](https://github.com/Caua-Israel)| Desenvolvedor Full Stack |
+|📂 [Adriel França](https://github.com/france-m52)| Desenvolvedor Full Stack & Economista  |
 
 ---
 
@@ -45,16 +45,17 @@ Plataforma para **coleta de feedbacks e respostas de questionários**, com **rec
 
 ## 📂 Estrutura de Domínios
 
-| Domínio / Subdomínio       | Responsáveis |
-|----------------------------|-------------|
-| **Usuários** |[@Marcusantana](https://github.com/roberto-lourenco) & [@roberto-lourenco](https://github.com/roberto-lourenco)|
-| **Empresas** | [@BoratCRF](https://github.com/BoratCRF) & [@roberto-lourenco](https://github.com/roberto-lourenco)       |
-| **Planos** | [@france-m52](https://github.com/france-m52), [@BoratCRF](https://github.com/BoratCRF), [@roberto-lourenco](https://github.com/roberto-lourenco) & [@Marcusantana](https://github.com/roberto-lourenco)|
-| **Missões** | [@Caua-Israel](https://github.com/Caua-Israel), [@roberto-lourenco](https://github.com/roberto-lourenco), [@Marcusantana](https://github.com/roberto-lourenco), [@pedroxavier2244](https://github.com/pedroxavier2244) & [@lukasrozado](https://github.com/lukasrozado)|
-| **Token Wallets** |[@Marcusantana](https://github.com/roberto-lourenco) & [@roberto-lourenco](https://github.com/roberto-lourenco)|
-| **Integração com Blockchain** |[@lukasrozado](https://github.com/lukasrozado), [@pedroxavier2244](https://github.com/pedroxavier2244), [@FelipeBtlh](https://github.com/FelipeBtlh) & [@roberto-lourenco](https://github.com/roberto-lourenco)|
+| Domínio / Subdomínio         | Desenvolvido por                                                                                                                                       |
+|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Usuários**                 | [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco)                                    |
+| **Empresas**                 | [Vinicius Lino](https://github.com/BoratCRF), [Roberto Lourenço](https://github.com/roberto-lourenco)                                                 |
+| **Planos**                   | [Vinicius Lino](https://github.com/BoratCRF), [Adriel França](https://github.com/france-m52), [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco) |
+| **Missões**                  | [Cauã Israel](https://github.com/Caua-Israel), [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco) |
+| **Token Wallets**            | [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco)                                     |
+| **Integração com Blockchain**| [Felipe Botelho](https://github.com/FelipeBtlh), [Lukas Rozado](https://github.com/lukasrozado), [Pedro Ázara](https://github.com/pedroxavier2244), [Roberto Lourenço](https://github.com/roberto-lourenco) |
 
 ---
+
 
 ## 📌 O que o backend oferece?
 
