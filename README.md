@@ -1,191 +1,104 @@
-## 📘 Transfero Academy
-## 🌐 Plataforma de Feedbacks com Recompensas em Tokens
+# 📖 *Repositório da equipe de Backend*
 
+Este repositório contém o **backend da plataforma FeedToken**, desenvolvido em **Django REST Framework (API-only)**.
 
-> Este repositório contém o código-fonte do backend (Django REST) da plataforma de feedback. A branch `dev` é usada para desenvolvimento contínuo.
+## 🌟 O que é o FeedToken?
+> Iniciativa educacional desenvolvida como trabalho final do **Transfero Academy**.
 
----
-
-## 📌 Sobre o Projeto
-
-Esta plataforma conecta **empresas** que desejam receber feedbacks qualificados com **usuários comuns**, que são recompensados em **tokens** ao completarem missões ou responderem questionários.
-
-Além disso, há **analistas** que avaliam os feedbacks, e um **administrador** que gerencia planos, contratos e transações da plataforma.
-
-Os tokens simulam uma estrutura blockchain (com suporte real a carteiras via BNB Chain ou Polygon na produção e ETH-Sepolia no desenvolvimento).
+Plataforma para **coleta de feedbacks e respostas de questionários**, com **recompensas em tokens** gerenciadas via blockchain. Nosso objetivo é conectar **empresas** que buscam avaliações dos seus produtos/serviços a **usuários** dispostos a fornecer feedbacks valiosos em troca de tokens.
 
 ---
 
-## 🚀 Tecnologias Principais
+## 🚩 Visão Geral
 
-- **Backend**: Django + Django REST Framework  
-- **Blockchain**: Integração com Smart Contracts (Solidity)  
-- **Banco de dados**: PostgreSQL (produção), SQLite (dev)  
-- **Autenticação**: JWT  
-- **Frontend (em outro repositório)**: React  
+- **Backend desacoplado** (API-only) para integração com frontend (React) e smart contracts (Solidity).
 
----
+- **Domínios definidos**: users, companies, plans, missions, tokens & blockchain(Integração).
 
-## 🧑‍💻 Requisitos para rodar localmente
+- **Recompensas em tokens** armazenadas no backend e preparadas para envio à blockchain.
 
-Antes de iniciar, instale os seguintes itens:
-
-- Python 3.10+
-- pip
-- [Poetry](https://python-poetry.org/) (opcional) ou Venv
-- Git
+- **Autenticação JWT via dj-rest-auth + django-allauth**
 
 ---
 
-## 📝 Como Contribuir para o Repositório
+## 👥 Equipe Backend
 
-Este tutorial descreve o fluxo ideal de trabalho para contribuir com o projeto. Siga as etapas abaixo para garantir que suas alterações sejam integradas ao repositório principal de forma eficiente.
+| Nome | Função |
+|-------|-------|
+|📂 [Roberto Lourenço](https://github.com/roberto-lourenco)| Líder de equipe & Engenheiro de software |
+|📂 [Marcus Vinicius](https://github.com/Marcusantana)| Desenvolvedor Full Stack |
+|📂 [Vinicius Lino](https://github.com/BoratCRF)| Desenvolvedor Full Stack |
+|📂 [Cauã Israel](https://github.com/Caua-Israel)| Desenvolvedor Full Stack |
+|📂 [Adriel França](https://github.com/france-m52)| Desenvolvedor Full Stack & Economista  |
 
-## ⚙️ Instalação e Setup Local
+---
 
-### 1. Faça o Fork do Repositório
-Acesse o repositório de desenvolvimento: **[Repositório de desenvolvimento](https://github.com/TransferoNovaIguacu/feedback-company-backend/tree/dev)**
+## 💻 Tecnologias utilizadas
 
-Clique no botão **Fork** no canto superior direito. Isso irá criar uma cópia do repositório na sua conta do GitHub.
+- Django / Django REST Framework
+- PostgreSQL / SQlite3
+- dj-rest-auth + django-allauth (JWT)
+- Pytest (Testes unitários)
+- DRF-Spectacular (Documentação de endpoints Swagger & Redoc)
 
-### 2. Clone o Repositório Forkado
-Depois de fazer o fork, clone o repositório para o seu computador utilizando o link do seu fork:
+---
+
+## 📂 Estrutura de Domínios
+
+| Domínio / Subdomínio         | Desenvolvido por                                                                                                                                       |
+|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Usuários**                 | [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco)                                    |
+| **Empresas**                 | [Vinicius Lino](https://github.com/BoratCRF), [Roberto Lourenço](https://github.com/roberto-lourenco)                                                 |
+| **Planos**                   | [Vinicius Lino](https://github.com/BoratCRF), [Adriel França](https://github.com/france-m52), [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco) |
+| **Missões**                  | [Cauã Israel](https://github.com/Caua-Israel), [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco) |
+| **Token Wallets**            | [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco)                                     |
+| **Integração com Blockchain**| [Felipe Botelho](https://github.com/FelipeBtlh), [Lukas Rozado](https://github.com/lukasrozado), [Pedro Ázara](https://github.com/pedroxavier2244), [Roberto Lourenço](https://github.com/roberto-lourenco) |
+
+---
+
+
+## 📌 O que o backend oferece?
+
+- API para **cadastro e autenticação** de usuários (common users e companies)
+- API para **gestão de empresas e planos contratados**
+- API para **criação e gerenciamento de missões**
+- API para **distribuição e consulta de tokens**
+- Estrutura para integração com **blockchain (Solana/ETH)**
+
+---
+
+## 📚 Documentação
+
+- 🔹 [API Docs Swagger/OpenAPI](http://127.0.0.1:8000/api/v1/docs/swagger/) *(Precisa rodar o servidor localmente)*
+- 🔹 [Diagrama de Classes](https://github.com/TransferoNovaIguacu/feedback-company-backend/blob/dev/docs/Diagrama%20de%20classes.pdf) *(Modelo inicial & MVP, houve alterações durante o desenvolvimento)
+- 🔹 [Regras de negócio e requisitos](https://github.com/TransferoNovaIguacu/feedback-company-backend/blob/dev/docs/An%C3%A1lise%20de%20Requisitos%2031-05-2025%201740%20-%20Plataforma%20de%20Feedbacks.pdf) *(Modelo inicial & MVP)
+
+---
+
+## ⚙️ Como rodar localmente
 
 ```bash
-git clone --branch dev --single-branch https://github.com/SEU-USUARIO/feedback-company-backend.git
-```
+git clone <repo-url>
+cd <repo>
 
-### 3. Configure o Ambiente Local
-
-Crie e ative um ambiente virtual:
-
-Com `venv`:
-
-```bash
 python -m venv venv
-venv\Scripts\activate
-```
+source venv/Scripts/activate
 
-Ou se preferir usar o `poetry`:
+pip install -r requirements.txt
 
-```bash
-poetry install
-poetry shell
-```
+# Configure o .env conforme seu ambiente (deploy, desenvolvimento etc..)
+# Selecione a branch que irá utilizar
 
-### 4. Instale as Dependências do Projeto
-
-```bash
-pip install -r requirements-dev.txt
-```
-
-### 5. Crie o Arquivo `.env`
-
-Na pasta raiz do projeto, crie um arquivo `.env` com as seguintes variáveis de ambiente:
-
-```env
-SECRET_KEY=teste123
-DEBUG=True
-ALLOWED_HOSTS= 127.0.0.1
-```
-
-### 6. Execute as Migrações e Crie um Superusuário
-
-```bash
 python manage.py makemigrations
 python manage.py migrate
-python manage.py createsuperuser
-```
-
-### 7. Rode o Servidor Local
-
-```bash
 python manage.py runserver
+
+
 ```
 
 ---
 
-## 🧠 Planejamento e Documentação
+## ⚠️ Aviso
 
-Consulte a pasta `/docs` para mais informações, como:
-
-- 📄 Requisitos funcionais e não funcionais
-- 🧭 Regras de negócio e fluxos do sistema
-- 📊 Diagramas de classes UML
-- 🗂️ Backlog de Tarefas
-
----
-
-## 👥 Fluxo de Contribuição
-
-## *Apenas realize as etapas abaixo após realizar o fork, clone, e instalação do projeto.*
-
-### 1. Sincronizando seu Repositório com o Principal
-
-Adicione o repositório principal como `upstream`:
-
-```bash
-git remote add upstream https://github.com/TransferoNovaIguacu/feedback-company-backend.git
-```
-
-Atualize seu repositório local:
-
-```bash
-git fetch upstream
-git checkout dev
-git merge upstream/dev
-```
-
-### 2. Criação de Branch
-
-Crie uma nova branch:
-
-```bash
-git checkout -b <tipo>/descricao-da-tarefa
-```
-
-Exemplo:
-
-```bash
-git checkout -b feature/login-system
-```
-
-> 💡 Visite [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/) para entender o padrão de nomenclatura.
-
-### 3. Fazendo Alterações e Commitando
-
-```bash
-git add .
-git commit -m "feat: add user login system"
-```
-
-### 4. Subindo as Alterações para o Seu Repositório Forkado
-
-```bash
-git push origin <nome-da-branch>
-```
-
-### 5. Criando o Pull Request
-
-- Acesse seu repositório no GitHub
-- Selecione a branch que você acabou de enviar
-- Clique em **Compare & pull request**
-- Descreva as mudanças e clique em **Create pull request**
-
-> ⚠️ Certifique-se de enviar o Pull Request para a branch `dev` do repositório principal.
-
-### 6. Aguardando Revisão
-
-Espere a revisão e aprovação do seu Pull Request. Caso haja feedbacks, faça os ajustes e envie novamente.
-
----
-
-## 🚧 Fluxo Completo de Contribuição
-
-- Fork e Clone do Repositório Principal
-- Sincronização com o Repositório Principal (`upstream`)
-- Criação de Branch para Tarefa
-- Alterações, Commit e Push
-- Criação do Pull Request
-- Aguardando Revisão e Aprovação
+Este repositório contém o **backend** da plataforma. O frontend e os smart contracts são mantidos em repositórios separados.
 
