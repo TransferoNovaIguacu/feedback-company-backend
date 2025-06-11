@@ -53,6 +53,7 @@ Plataforma para **coleta de feedbacks e respostas de questionários**, com **rec
 | **Missões**                  | [Cauã Israel](https://github.com/Caua-Israel), [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco) |
 | **Token Wallets**            | [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco)                                     |
 | **Integração com Blockchain**| [Felipe Botelho](https://github.com/FelipeBtlh), [Lukas Rozado](https://github.com/lukasrozado), [Pedro Ázara](https://github.com/pedroxavier2244), [Roberto Lourenço](https://github.com/roberto-lourenco) |
+| **Integração com o FrontEnd**            | [Marcus Vinicius](https://github.com/Marcusantana), [Roberto Lourenço](https://github.com/roberto-lourenco), [Alex Lanção](https://github.com/lancao2)       |
 
 ---
 
